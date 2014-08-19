@@ -1,0 +1,81 @@
+= render :partial => "main_header"
+
+- if flash.any?
+	- flash.each do | name, msg |
+		%div.alert.alert-success.alert-dismissible{ :role => "alert" }
+			%button.close{ :type => "button", :'data-dismiss' => "alert" }
+				%span{ :'aria-hidden' => true }
+					&times;
+				%span.sr-only
+					Close
+			= content_tag :div, msg, class: name
+
+%div.jumbotron.most-viewed.show-view.alert-dismissible{ :role => "alert" }
+	%button.close{ :type => "button", :'data-dismiss' => "alert" }
+		%span{ :'aria-hidden' => true }
+			&times;
+		%span.sr-only
+			Close
+	%div.container
+		%div.row.newsletter-row
+			%div.col-md-6.parent
+				%form.form-group.child{ :action => "http://startuptreds.us8.list-manage.com/subscribe/post?u=afc77733a83c002482cf1399a&amp;id=ffcacf1dfd", :id => "mc-embedded-subscribe-form", :name => "mc-embedded-subscribe-form", :method => "post", :target => "_blank" }
+					%label.control-label
+						Zapisz się do newslettera
+					%div.input-group
+						%input.form-control{ :type => "email", :value => "", :id => "mce-EMAIL", :name => "EMAIL", :placeholder => "Adres email" } 
+						%div{ :style => "position: absolute; left: -5000px;" } 
+							%input{ :type => "text", :name => "b_afc77733a83c002482cf1399a_ffcacf1dfd", :tabindex => "-1", :value => "" }
+						%span.input-group-btn
+							%button.btn.btn-default{ :type => "submit", :value => "Subscribe", :name => "subscribe", :id => "mc-embedded-subscribe" }
+								Zapisz się
+			%div.col-md-6.parent
+				%div.child
+					%h4 Social Media - Podziel się
+					%span{ :class => 'st_twitter_hcount', :displayText => 'Tweet' }
+					%span{ :class => 'st_fblike_hcount', :displayText => 'Facebook Like' }
+					%span{ :class => 'st_twitterfollow_hcount', :displayText => 'Twitter Follow', :st_username => 'Startup_Trends' }
+			
+
+%div.jumbotron.most-viewed.dismiss
+	%div.container.mini-boxes
+		%div.row
+			%h3.green
+				%i.fa.fa-heart.fa-lg 
+				Najczęściej odwiedzane
+			- Startup.all.published.order("views DESC").last(3).each do | startup |
+				%a{ :href => startup_path(startup) }
+					%div.col-md-4.mini-box
+						%h3= startup.name
+						%p=  startup.short_description
+						= image_tag("#{startup.website_thumbnail(:thumb)}", class: "img-rounded")
+						%a{ :href => startup_path(startup) }
+							%button.btn.btn-info.btn-self.center-block
+								Zobacz
+
+%div.jumbotron.list
+	%div.container
+		%h3
+			%i.fa.fa-align-justify.fa-lg 
+			Startup'y
+		- @startups.each do | startup |
+			%div.row.startup-row
+				%div.col-md-6.parent
+					%div.child
+						%h2= startup.name
+						%h5= "Kategoria: #{startup.category.name}"
+						%h4= startup.short_description
+						%p=  if startup.description.length > 120 then startup.description.first(120) + "..." else startup.description end
+
+						%a{ :href => startup_path(startup) }
+							%button.btn.btn-success.btn-lg
+								Zobacz
+
+				%div.col-md-6
+					= image_tag("#{startup.website_thumbnail(:medium)}", class: "center-block img-index")
+
+
+%div.jumbotron
+	%div.container
+		%div.center-block			
+			= will_paginate @startups, renderer: BootstrapPagination::Rails

@@ -1,0 +1,26 @@
+%div.jumbotron.top-jumb
+	%div.container
+		%div.navbar.navbar-inverse{ :role => "navigation" }
+			%div.navbar-header
+				%button.navbar-toggle{ :type => "button", :'data-toggle' => "collapse", :'data-target' => ".navbar-collapse" }
+					%span.sry-only Toggle navigation
+					%span.icon-bar
+					%span.icon-bar
+					%span.icon-bar
+				%a.navbar-brand StartupTrends
+			%div.collapse.navbar-collapse.pull-right
+				%ul.nav.navbar-nav
+					%li
+						%a{ :href => root_path } Strona Główna
+					%li
+						%a{ :href => categories_path } Startupy
+					%li
+						%a{ :href => new_startup_path } Dodaj Startup
+					%li
+						%a{ :href => static_pages_events_path } Wydarzenia
+					%li
+						%a{ :href => "http://startuptrends.svbtle.com/" } Blog
+					%li
+						%a{ :href => static_pages_aboutus_path } O nas
+					%li
+						%a.last{ :href => "#footer" } Kontakt
